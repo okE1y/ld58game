@@ -32,11 +32,11 @@ public partial class IntPos : MonoBehaviour
         currentCell = GamePlace.instance.Place[pos.x, pos.y];
     }
 
-    public ChangePosContext CreateChangePosContext(Vector2Int resultPos) // Получить инфо о перемещении машинки
+    public ChangePosContext CreateChangePosContext(Vector2Int startpos, Vector2Int resultPos) // Получить инфо о перемещении машинки
     {
         ChangePosContext context = new ChangePosContext()
         {
-            startPoint = pos,
+            startPoint = startpos,
             endPoint = resultPos,
             _gameObject = gameObject
         };
