@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
 
     private float cellPoolOffset;
     public Transform cellPool;
+    public Transform CamClamp1;
+    public Transform CamClamp2;
 
     public bool playerEndMove = false;
     private void Awake()
@@ -161,6 +163,8 @@ public class GameManager : MonoBehaviour
 
         yield return Camera.main.GetComponent<CameraControll>().CenterCameraOnPlayer();
 
+        AlignPlaceToPlayer();
+
         playerEndMove = false;
 
         yield return new WaitForSeconds(0.2f);
@@ -169,7 +173,10 @@ public class GameManager : MonoBehaviour
 
     private void AlignPlaceToPlayer()
     {
+        float offs = cellPool.transform.position.x - (Game.player.transform.position.x - Mathf.Abs(cellPoolOffset));
         cellPool.transform.position = new Vector3(Game.player.transform.position.x - Mathf.Abs(cellPoolOffset), cellPool.transform.position.y, cellPool.transform.position.z);
+        CamClamp1.transform.position += new Vector3(Mathf.Abs(offs), 0f, 0f);
+        CamClamp2.transform.position += new Vector3(Mathf.Abs(offs), 0f, 0f);
     }
 
 }

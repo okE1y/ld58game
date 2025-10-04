@@ -845,7 +845,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cars: []
   turnUI: {fileID: 0}
-  cellPool: {fileID: 0}
+  cellPool: {fileID: 1972979093}
+  CamClamp1: {fileID: 251349968}
+  CamClamp2: {fileID: 2064956069}
   playerEndMove: 0
 --- !u!4 &670334042
 Transform:
