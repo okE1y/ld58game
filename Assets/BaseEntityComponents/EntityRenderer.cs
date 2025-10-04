@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 
+[RequireComponent(typeof(IntPos))]
 public class EntityRenderer : MonoBehaviour
 {
     [HideInInspector] public IntPos IntPos;

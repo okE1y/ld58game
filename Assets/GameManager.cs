@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public List<Sequence> sequences = new List<Sequence>();
+    public List<GameObject> Cars = new List<GameObject>();
 
     private bool playerEndMove = false;
     private void Awake()
@@ -45,7 +46,16 @@ public class GameManager : MonoBehaviour
 
     private void MakeRoutePhase()
     {
-        //Строим маршруты всех машинок
+        foreach (GameObject go in Cars)
+        {
+            Car car = go.GetComponent<Car>();
+            if (car.CellSelected) // если машинка выбрала клетку
+            {
+                IntPos ip = go.GetComponent<IntPos>();
+
+                ip.CreateChangePosContext(ip.pos, car.SelectedCell); // Создаём маршрут
+            }
+        }
     }
 
     private IEnumerator ApplyMovePhase()
@@ -58,6 +68,16 @@ public class GameManager : MonoBehaviour
     {
         // Проверяем условие завершения хода
         return true;
+    }
+
+    private IEnumerator FinishMove()
+    {
+        foreach (GameObject go in Cars)
+        {
+            Car car = go.GetComponent<Car>();
+            car.CellSelected = false;
+        }
+        yield break;
     }
 
 }
