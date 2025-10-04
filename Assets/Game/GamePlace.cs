@@ -8,7 +8,7 @@ public class GamePlace
 
     public Vector2 cellSize { get; } = new Vector2(1f, 1f);
 
-    public Cell[,] Place = new Cell[200, 6];
+    public Cell[,] Place = new Cell[200, 5];
     private GamePlace()
     {
         for (int i = 0; i < Place.GetLength(0); i++)

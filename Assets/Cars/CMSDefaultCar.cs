@@ -7,13 +7,14 @@ public class CMSDefaultCar : CMSEntity
     public CMSDefaultCar()
     {
         Define<TagDefaultCar>().paternPath = $"{PaternCreator.folder}/BasePatern.json";
+        Define<TagDefaultCar>().MaxSpeed = 8;
     }
 }
 
 public class TagDefaultCar : CMSComponent
 {
     public string paternPath;
-
+    public int MaxSpeed;
     public List<Vector2Int> UnpackPatern()
     {
         PaternCreator.SerializeList temp = JsonUtility.FromJson<PaternCreator.SerializeList>(File.ReadAllText(paternPath));

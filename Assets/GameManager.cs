@@ -8,12 +8,19 @@ public class GameManager : MonoBehaviour
     public List<Sequence> sequences = new List<Sequence>();
     public List<GameObject> Cars = new List<GameObject>();
 
-    private bool playerEndMove = false;
+    [Space]
+    public TrunUI turnUI;
+    public Switcher cameraControllSwitcher;
+
+    public bool playerEndMove = false;
     private void Awake()
     {
         Game.GameManager = this;
 
         CMS.Init();
+
+        cameraControllSwitcher = Camera.main.GetComponent<CameraControll>().MSwitcher.CreateNewSwitcher();
+        cameraControllSwitcher.Switch = false;
     }
 
     private IEnumerator Start()
@@ -22,15 +29,34 @@ public class GameManager : MonoBehaviour
         {
             yield return PlayerMovePhase();
             yield return GamePhase();
+            yield return FinishMove();
         }
     }
 
     private IEnumerator PlayerMovePhase()
     {
-        // Вызов интерфейса
-        // передача управления над камерой
+        yield return Game.TurnUI.TurnOnUI(); // Включаем UI
+        cameraControllSwitcher.Switch = true; // Включаем управление камерой
+
+        foreach (var car in Cars)
+        {
+            car.GetComponent<Car>().DefineAcceleration(); // Определяем ускорение для всех машинок в ходу
+        }
+
+        Game.player.VisualizePatern(); // Показываем патерн игрока
 
         yield return new WaitUntil(() => playerEndMove); // ждем когда игрок закончит ход
+
+        cameraControllSwitcher.Switch = false;
+
+        Game.player.HidePatern();
+
+        yield return Game.TurnUI.TurnOffUI();
+
+        Game.TurnUI.ConfirmSpeed();
+
+        yield return new WaitForSeconds(2f);
+
         yield break;
     }
 
@@ -76,7 +102,11 @@ public class GameManager : MonoBehaviour
             Car car = go.GetComponent<Car>();
             car.CellSelected = false;
         }
+
+        playerEndMove = false;
         yield break;
     }
+
+    
 
 }

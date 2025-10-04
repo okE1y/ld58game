@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PaternCell : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class PaternCell : MonoBehaviour
     private Color defaultColor;
     private Color attentionColor;
     private Color SelectedColor;
+
+    public UnityEvent<Vector2Int, bool> OnCellSelect = new UnityEvent<Vector2Int, bool>();
 
     private void Start()
     {
@@ -36,21 +39,24 @@ public class PaternCell : MonoBehaviour
         ChangeState();
     }
 
-    public void SetSelectedTrue()
+    public void SetSelectedTrue(bool fast = false)
     {
         Selected = true;
+        if (!fast) OnCellSelect.Invoke(pos, true);
         ChangeState();
     }
 
-    public void SetSelectedFalse()
+    public void SetSelectedFalse(bool fast = false)
     {
         Selected = false;
+        if (!fast) OnCellSelect.Invoke(pos, false);
         ChangeState();
     }
 
     public void SwitchSelected()
     {
         Selected = !Selected;
+        OnCellSelect.Invoke(pos, Selected);
         ChangeState();
     }
 
@@ -77,5 +83,7 @@ public class PaternCell : MonoBehaviour
     {
         InAttention = false;
         Selected = false;
+        spriteRenderer.color = defaultColor;
+        OnCellSelect.RemoveAllListeners();
     }
 }

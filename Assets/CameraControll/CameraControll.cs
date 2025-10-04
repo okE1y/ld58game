@@ -11,9 +11,11 @@ public class CameraControll : MonoBehaviour
     public Transform cl1;
     public Transform cl2;
 
+    public MultipleSwitcher MSwitcher = new MultipleSwitcher();
+
     public void MoveCamera(InputAction.CallbackContext context)
     {
-        if (context.started || context.canceled)
+        if (MSwitcher.GetSwitchState() && (context.started || context.canceled))
         {
             rawDirection = context.ReadValue<float>();
         }
