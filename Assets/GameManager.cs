@@ -12,13 +12,12 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Game.GameManager = this;
+
+        CMS.Init();
     }
 
     private IEnumerator Start()
     {
-        yield return new WaitForSeconds(1f);
-
-
         while (true) // игровой цикл
         {
             yield return PlayerMovePhase();

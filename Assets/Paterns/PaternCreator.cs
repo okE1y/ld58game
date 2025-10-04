@@ -5,6 +5,8 @@ using System.Linq;
 
 public class PaternCreator : MonoBehaviour
 {
+    public static string folder = "Paterns";
+
     public List<Transform> cells = new List<Transform>();
     [SerializeField, HideInInspector] private List<IntPare> Ints = new List<IntPare>();
     [SerializeField, HideInInspector] private SerializeList list;
@@ -17,7 +19,7 @@ public class PaternCreator : MonoBehaviour
         list = new SerializeList(Ints);
         string jsonInts = JsonUtility.ToJson(list, true);
 
-        File.WriteAllText($"Paterns/{gameObject.name}_pat.json", jsonInts);
+        File.WriteAllText($"{folder}/{gameObject.name}.json", jsonInts);
 
         Ints.Clear();
     }
