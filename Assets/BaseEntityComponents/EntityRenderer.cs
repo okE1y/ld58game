@@ -25,9 +25,9 @@ public class EntityRenderer : MonoBehaviour
             for (int i = 0; i < history.Count; i++)
             {
                 if (i != history.Count - 1)
-                    MoveSequance.Append(transform.DOLocalMove((Vector3)(history[i + 1].startPoint * GamePlace.instance.cellSize), moveTime)).SetEase(Ease.Linear);
+                    MoveSequance.Append(transform.DOLocalMove((Vector3)(history[i + 1].startPoint * GamePlace.instance.cellSize), moveTime)).SetEase(Ease.InOutCubic);
                 else
-                    MoveSequance.Append(transform.DOLocalMove((Vector3)(history[i].endPoint * GamePlace.instance.cellSize), moveTime)).SetEase(Ease.Linear);
+                    MoveSequance.Append(transform.DOLocalMove((Vector3)(history[i].endPoint * GamePlace.instance.cellSize), moveTime)).SetEase(Ease.InOutCubic);
             }
 
             Game.GameManager.sequences.Add(MoveSequance);

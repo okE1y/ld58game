@@ -7,6 +7,8 @@ public class GamePlaceDrawer : MonoBehaviour
 
     private GameObject[,] cellSprites;
 
+    public Transform Ceils;
+
     void Start()
     {
         cellSprites = new GameObject[30, GamePlace.instance.Place.GetLength(1)];
@@ -17,7 +19,7 @@ public class GamePlaceDrawer : MonoBehaviour
         {
             for (int j = 0; j < cellSprites.GetLength(1); j++)
             {
-                cellSprites[i, j] = Instantiate(cellSpritePrefab, transform);
+                cellSprites[i, j] = Instantiate(cellSpritePrefab, Ceils);
                 cellSprites[i, j].transform.localPosition = GamePlace.instance.cellSize * new Vector3(i, j);
             }
         }

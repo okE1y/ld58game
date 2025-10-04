@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     public TrunUI turnUI;
     public Switcher cameraControllSwitcher;
 
+    private float cellPoolOffset;
+    public Transform cellPool;
+
     public bool playerEndMove = false;
     private void Awake()
     {
@@ -25,6 +28,9 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator Start()
     {
+        yield return null;
+        cellPoolOffset = cellPool.transform.position.x - Game.player.transform.position.x;
+
         while (true) // игровой цикл
         {
             yield return PlayerMovePhase();
@@ -153,10 +159,17 @@ public class GameManager : MonoBehaviour
             car.CellSelected = false;
         }
 
+        yield return Camera.main.GetComponent<CameraControll>().CenterCameraOnPlayer();
+
         playerEndMove = false;
+
+        yield return new WaitForSeconds(0.2f);
         yield break;
     }
 
-    
+    private void AlignPlaceToPlayer()
+    {
+        cellPool.transform.position = new Vector3(Game.player.transform.position.x - Mathf.Abs(cellPoolOffset), cellPool.transform.position.y, cellPool.transform.position.z);
+    }
 
 }
