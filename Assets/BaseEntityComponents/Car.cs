@@ -17,7 +17,7 @@ public class Car : MonoBehaviour
 
     public List<Vector2Int> CellPatern = new List<Vector2Int>();
 
-    private Vector2 Direction = Vector2.right;
+    public Vector2 Direction = Vector2.right;
     public int Speed; // –ассто€ние селл патерна от машинки по направлению Direction
 
     public int maxSpeed;
@@ -64,7 +64,7 @@ public class Car : MonoBehaviour
 
         
         return temp.FindAll((x) => 0 < x.x + 1 && x.x + 1 < GamePlace.instance.Place.GetLength(0) &&
-        0 < x.y + 1 && x.y + 1 < GamePlace.instance.Place.GetLength(1));
+        0 < x.y + 1 && x.y < GamePlace.instance.Place.GetLength(1));
 
     }
 

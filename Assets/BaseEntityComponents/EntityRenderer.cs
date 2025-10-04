@@ -17,10 +17,11 @@ public class EntityRenderer : MonoBehaviour
     {
         var history = IntPos.ChangePosInvokesHistory;
 
-        MoveSequance = DOTween.Sequence();
 
-        if (history != null)
+        if (history.Count != 0)
         {
+
+            MoveSequance = DOTween.Sequence();
             for (int i = 0; i < history.Count; i++)
             {
                 if (i != history.Count - 1)
@@ -28,9 +29,11 @@ public class EntityRenderer : MonoBehaviour
                 else
                     MoveSequance.Append(transform.DOLocalMove((Vector3)(history[i].endPoint * GamePlace.instance.cellSize), moveTime)).SetEase(Ease.Linear);
             }
-        }
-        Game.GameManager.sequences.Add(MoveSequance);
 
-        MoveSequance.Play();
+            Game.GameManager.sequences.Add(MoveSequance);
+
+            MoveSequance.Play();
+        }
+
     }
 }

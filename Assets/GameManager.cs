@@ -54,8 +54,9 @@ public class GameManager : MonoBehaviour
         yield return Game.TurnUI.TurnOffUI();
 
         Game.TurnUI.ConfirmSpeed();
+        SetDirection();
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.3f);
 
         yield break;
     }
@@ -85,14 +86,63 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator ApplyMovePhase()
     {
+        foreach(GameObject go in Cars)
+        {
+            go.GetComponent<EntityRenderer>().ChangePosition(); // перемещаем спрайт и применяем эффекты
+        }
+
+        yield return new WaitUntil(GetAllSequanceState);
+
+        KillSequances();
+
+        foreach (GameObject go in Cars)
+        {
+            go.GetComponent<IntPos>().ApplyMove();
+        }
+
         // Воплощяем ходы, собираем ловушки и активируем эффекты
         yield break;
+    }
+
+    public bool GetAllSequanceState()
+    {
+        bool complated = true;
+        foreach (var item in sequences)
+        {
+            complated = complated && item.IsComplete();
+        }
+
+        return complated;
+    }
+
+    public void KillSequances()
+    {
+        foreach (var item in sequences)
+        {
+            item.Kill();
+        }
+
+        sequences.Clear();
     }
 
     private bool CheckFinishCondition()
     {
         // Проверяем условие завершения хода
         return true;
+    }
+
+    private void SetDirection()
+    {
+        foreach (var car in Cars)
+        {
+            Car a = car.GetComponent<Car>();
+            IntPos b = a.GetComponent<IntPos>();
+
+            if (a.SelectedCell != b.pos)
+            {
+                a.Direction = ((Vector2)(a.SelectedCell - b.pos)).normalized;
+            }
+        }
     }
 
     private IEnumerator FinishMove()
