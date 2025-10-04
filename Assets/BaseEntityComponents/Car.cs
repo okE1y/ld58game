@@ -59,7 +59,7 @@ public class Car : MonoBehaviour
 
         for (int i = 0; i < temp.Count; i++)
         {
-            temp[i] += intPos.pos + new Vector2Int(Mathf.FloorToInt(Direction.x * Speed), Mathf.FloorToInt(Direction.y * Speed));
+            temp[i] += intPos.pos + new Vector2Int(Mathf.CeilToInt(Direction.x * Speed), Mathf.CeilToInt(Direction.y * Speed));
         }
 
         

@@ -1580,7 +1580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a898a782af68ab945b55ecd0591773f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <pos>k__BackingField: {x: 3, y: 4}
+  <pos>k__BackingField: {x: 3, y: 2}
   ChangePosEvent:
     m_PersistentCalls:
       m_Calls: []
